@@ -1,4 +1,4 @@
-# tutorial_R_d3_force_network_viz
+# tutorial: From R to a d3-based force-network visualization
 We provide a tutorial on our workflow to generate force-networks in D3,  starting with data in R data
 
 
