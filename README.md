@@ -9,11 +9,23 @@ Working on different stories and visualizations at compscjournalism.org, (social
 
 ### Tutorial/workflow structure
 
-* Data preparation in R
-* write data to JSON object
-* read JSON object in Javascript function to create a network
+* Data preparation in R, creating a JSON object
+
+* Creating a social network visualization in D3
 
 Within the following section, I will go through these sections briefly and link you to the more detailed tutorials on R and D3 that cover the workflow in greater detail. 
+
+
+### Data preparation in R
+
+To illustrate the workflow, we use a sample dataset on basketball players and social relations based on teammembership over the course of the player's careers. Thus, nodes represent single players and ties between them indicate those players to have played together in a team a some point of their career. The sample data is uploaded here as an RData object (sample_data.RData). 
+The data preparation and the creation of a JSON object is described in great detail in the tutorial_r_side files (both as compiled .html and raw R-markdown file). Find these attached in the resources folder.
+
+
+### Creating a social network visualization in D3
+Once the .json object (graph_data.json is attached in the resources folded) is created, we can turn to the Javascript/D3/HTML side of the process. See the network_viz.html document in the resources folder that contains the source code for generating the network visualization. Is is important to consider the options given by CSS and D3 itself, to change the visualization in any regards. What we publish here is a rather a template that we adapt then depending on the project context. 
+
+
 
 
 
