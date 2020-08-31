@@ -4,7 +4,7 @@ We provide a tutorial on our workflow to generate force-networks in D3,  startin
 
 ### What this tutorial shows
 
-Working on different stories and visualizations at compscjournalism.org, (social) networks are one of our highly favored types of visualizations. With a stronger background in R-programming and a desire to tell stories on digital platforms in an intuitive, interactive fashion, we developed a workflow combining data preparation and analysis in R and visualization of networks using Javascript, in particular D3.  Here, we present this workflow starting from sample data of a social network in R, right until the visualized SVG (based on JS and D3) in an.html document. The resulting visualization can be found here
+Working on different stories and visualizations at compscjournalism.org, (social) networks are one of our highly favored types of visualizations. With a stronger background in R-programming and a desire to tell stories on digital platforms in an intuitive, interactive fashion, we developed a workflow combining data preparation and analysis in R and visualization of networks using Javascript, in particular D3.  Here, we present this workflow starting from sample data of a social network in R, right until the visualized SVG (based on JS and D3) in an.html document. The resulting visualization can be found [here](http://compscjournalism.org/projects/network_viz_tutorial/network_viz.html)
 
 
 ### Tutorial/workflow structure
