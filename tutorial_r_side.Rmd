@@ -1,0 +1,92 @@
+---
+title: 'From R to SVG: Our workflow to generate force-layout networks'
+author: "Jan Sodoge"
+date: "8/30/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+This file documents the process on the R-level described in the compscjournalism.org tutorial on getting from network data in R to a force-layout network as an SVG in Javascript and D3. 
+
+#Getting the data ready in R
+
+
+```{r}
+library(statnet)
+library(tidyverse)
+library(knitr)
+load("sample_data.RData") #<- find this sample data attached in the repository
+```
+The sample data we start with consist of a vector containing the nodes (i.e. basketball player names) and a dataframe, containing the ties between them (see original formatting below).
+```{r}
+kable(head(edges,3))
+```
+
+
+
+
+
+### Create the nodelist
+```{r}
+
+#we create the nodelist within the format required
+nodelist_d3 <- as.data.frame(nodes) #<- since the nodes are stored in vector format
+nodelist_d3$group <- 1 # if you e.g.  wish to color nodes by group, pass a groupID here, in this example all groups identify with one group
+
+nodelist_d3$ID <- seq(0, nrow(nodelist_d3)-1) #<- get each player an individual ID creating the edgelist further on
+colnames(nodelist_d3) <- c("name", "group", "ID")
+kable(head(nodelist_d3,3))
+
+```
+
+
+
+### Create the edgelist
+
+
+```{r}
+edgelist_d3 <- edges #edges as the sample data dataframe
+edgelist_d3$weight <- 1 # add a weight to the edges
+colnames(edgelist_d3) <- c("source", "target", "value")
+```
+
+Next, we need to replace the player names with their respective IDs created previously within the nodelist
+```{r}
+edgelist_id_version <- merge(edgelist_d3, nodelist_d3, by.x = "source", by.y = "name") %>% 
+  select(ID, target, value)
+#merge for target
+edgelist_id_version <- merge(edgelist_id_version, nodelist_d3, by.x = "target", by.y = "name") %>% 
+  select(ID.x, ID.y, value)
+colnames(edgelist_id_version) <- c("source", "target", "value")
+edgelist_d3 <- edgelist_id_version
+
+```
+
+
+
+Thus, our data we will pass on to Javascript looks like this. For the edgelist, the numbers indicate the IDs of the nodes (i.e. players). 
+```{r}
+kable(head(nodelist_d3,3))
+kable(head(edgelist_d3,3))
+
+```
+
+
+
+### Getting the data into JSON format
+We use the d3_json function from d3r package to create a JSON object based on the two previously created dataframes. Later, the .html file containing the Javascript code will load this file to visualize the network. 
+```{r}
+library(RJSONIO)
+library(d3r)
+write(paste0("{", d3_json(list(nodes = nodelist_d3, links = edgelist_d3)), "}"),
+        "graph_data.json")
+```
+
+
+
+### That's it on the R-level
+Having created the .json file, R has finished its duties. From now, we can focus on the JS/D3/HTML side. To follow along, switch back to the main tutorial overview. 
